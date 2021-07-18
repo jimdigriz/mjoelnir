@@ -38,7 +38,7 @@ Some of the options are described here:
 
  * Credentials:
      * **`--twilio-account-sid` [required]:** Twilio Account SID
-         * will use the environment variable `TWILIO_ACCOUNT_SID`` if set
+         * will use the environment variable `TWILIO_ACCOUNT_SID` if set
      * **`--twilio-auth-token` [required]:** Twilio Auth Token
          * will use the environment variable `TWILIO_AUTH_TOKEN` if set
      * recommended you supply [credentials securely via environment variables](https://www.twilio.com/docs/usage/secure-credentials)
@@ -48,7 +48,7 @@ Some of the options are described here:
  * Calls:
      * **`--calls-max` (default: `10`):** maximum hard limit of simultaneous calls
      * **`--call-duration` (default: `120`):** call duration before hanging up in seconds
-     * **`--call-duration-fuzz (default: `20`):** percentage of random fuzz to add to call duration
+     * **`--call-duration-fuzz` (default: `20`):** percentage of random fuzz to add to call duration
  * Rate limiting:
      * uses a [Token Bucket](https://www.tutorialandexample.com/congestion-control-algorithm/) to rate limit calling
      * **`--rate-limit` (default: `10.0`):** calls per second
