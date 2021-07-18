@@ -1,4 +1,4 @@
-[Mjölnir](https://en.wikipedia.org/wiki/Mj%C3%B6lnir) is a contact/call centre load tester that uses [Twilio's Programmable Voice](https://www.twilio.com/docs/voice) to make calls through.
+[Mjölnir](https://en.wikipedia.org/wiki/Mj%C3%B6lnir) is a contact/call centre ('hammer') load tester that uses [Twilio's Programmable Voice](https://www.twilio.com/docs/voice) to make calls through.
 
 Project sponsored by [SOAS, University of London](https://www.soas.ac.uk/).
 
