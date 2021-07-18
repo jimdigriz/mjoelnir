@@ -12,20 +12,25 @@ You need to be running either:
 
 You will need to install the dependencies with:
 
-    apt-get update
-    apt-get -y install --no-install-recommends python3-virtualenv
+    sudo apt-get update
+    sudo apt-get -y install --no-install-recommends ca-certificates git python3-virtualenv
 
 Now set up the project with:
 
+    git clone https://gitlab.com/jimdigriz/mjoelnir.git
+    cd mjoelnir
     virtualenv -p python3 venv
     . venv/bin/activate
     pip3 install -r requirements.txt
 
 # Usage
 
+From inside the project directory run:
+
     export TWILIO_ACCOUNT_SID=AC093e3266663b9b4e5a244367e49724f5
     export TWILIO_AUTH_TOKEN=bd38098ea50a99d7d0d0ebaeb89aa938
     
+    . venv/bin/activate
     python3 mjolnir.py --from +15005550006 --to +44....
 
 Statistics are regularly printed (default is every 5 seconds, changeable with `--stats-interval`) and you can quit the tool by pressing `Ctrl-C` at any time.
