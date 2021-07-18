@@ -13,7 +13,7 @@ You need to be running either:
 You will need to install the dependencies with:
 
     sudo apt-get update
-    sudo apt-get -y install --no-install-recommends ca-certificates git python3-virtualenv
+    sudo apt-get -y install --no-install-recommends ca-certificates git python3-virtualenv virtualenv
 
 Now set up the project with:
 
