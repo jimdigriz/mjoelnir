@@ -27,11 +27,11 @@ Now set up the project with:
 
 From inside the project directory run:
 
-    export TWILIO_ACCOUNT_SID=AC093e3266663b9b4e5a244367e49724f5
-    export TWILIO_AUTH_TOKEN=bd38098ea50a99d7d0d0ebaeb89aa938
+    export TWILIO_ACCOUNT_SID=AC...
+    export TWILIO_AUTH_TOKEN=bd...
     
     . venv/bin/activate
-    python3 mjolnir.py --from +15005550006 --to +44....
+    python3 mjolnir.py --from +1... --to +1...
 
 Statistics are regularly printed (default is every 5 seconds, changeable with `--stats-interval`) and you can quit the tool by pressing `Ctrl-C` at any time.
 
