@@ -27,3 +27,30 @@ Now set up the project with:
     export TWILIO_AUTH_TOKEN=bd38098ea50a99d7d0d0ebaeb89aa938
     
     python3 mjolnir.py --from +15005550006 --to +44....
+
+Statistics are regularly printed (default is every 5 seconds, changable with `--stats-interval`) and you can quit the tool by pressing `Ctrl-C` at any time.
+
+You can use the following to see a description of all the arguments you can use to control the tool.
+
+    python3 mjolnir.py --help
+
+Some of the options are described here:
+
+ * Credentials:
+     * **`--twilio-account-sid` [required]:** Twilio Account SID
+         * will use the environment variable `TWILIO_ACCOUNT_SID`` if set
+     * **`--twilio-auth-token` [required]:** Twilio Auth Token
+         * will use the environment variable `TWILIO_AUTH_TOKEN` if set
+     * recommended your supply [credentials securely via environment variables](https://www.twilio.com/docs/usage/secure-credentials)
+ * Telephone numbers:
+     * **`--from` [required]:** number you are claiming to call from
+     * **`--to` [required]:** number you are dialing
+ * Calls:
+     * **`--calls-max` (default: `10`):** maximum hard limit of simulateous calls
+     * **`--call-duration` (default: `120`):** call duration before hanging up in seconds
+     * **`--call-duration-fuzz (default: `20`):** percentage of random fuzz to add to call duration
+ * Rate limiting:
+     * uses a [Token Bucket](https://www.tutorialandexample.com/congestion-control-algorithm/) to rate limit calling
+       **`--rate-limit` (default: `10.0`):** calls per second
+           * can be set to values less than `1.0` (for example `0.2` means one every five seconds)
+       **`--rate-limit-burst` (default: `1`):** number of calls possible before rate limiting occurs

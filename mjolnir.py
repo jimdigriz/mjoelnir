@@ -19,17 +19,17 @@ arg_account_sid = {'default': os.getenv('TWILIO_ACCOUNT_SID')} if 'TWILIO_ACCOUN
 arg_auth_token = {'default': os.getenv('TWILIO_AUTH_TOKEN')} if 'TWILIO_AUTH_TOKEN' in os.environ else {'required': True}
 
 parser = argparse.ArgumentParser(description='Mjölnir, a contact/call centre load tester that uses Twilio.')
+parser.add_argument('--debug', dest='log_level', default=logging.INFO, action='store_const', const=logging.DEBUG, help='enable verbose debugging')
 parser.add_argument('--twilio-account-sid', type=str, help='Twilio Account SID (default: env TWILIO_ACCOUNT_SID)', **arg_account_sid)
 parser.add_argument('--twilio-auth-token', type=str, help='Twilio Auth Token (default: env TWILIO_AUTH_TOKEN', **arg_auth_token)
 parser.add_argument('--from', type=str, dest='from_', required=True, help='Number you want to state you are calling from.')
 parser.add_argument('--to', type=str, required=True, help='Number you want to dial.')
-parser.add_argument('--rate-limit-burst', type=int, default=1, help='rate limit burst')
-parser.add_argument('--rate-limit', type=float, default=10.0, help='rate limit (calls per second)')
 parser.add_argument('--calls-max', type=int, default=10, help='ceiling limit of simulateous calls')
 parser.add_argument('--call-duration', type=int, default=120, help='call duration before hanging up in seconds')
-parser.add_argument('--call-duration-fuzz', type=float, default=0.2, help='call duration fuzz as ratio (0.00 =< x =< 1.00)')
+parser.add_argument('--call-duration-fuzz', type=int, default=20, help='call duration fuzz percentage')
+parser.add_argument('--rate-limit', type=float, default=10.0, help='rate limit (calls per second)')
+parser.add_argument('--rate-limit-burst', type=int, default=1, help='rate limit burst')
 parser.add_argument('--stats-interval', type=float, default=5.0, help='interval in seconds to print statistics')
-parser.add_argument('--debug', dest='log_level', default=logging.INFO, action='store_const', const=logging.DEBUG, help='enable verbose debugging')
 
 args = parser.parse_args()
 
@@ -82,7 +82,7 @@ def call_create():
     call = client.calls.create(to = args.to, from_ = args.from_, twiml = resp)
     csids.add(call.sid)
 
-    delta = args.call_duration * args.call_duration_fuzz;
+    delta = args.call_duration * (args.call_duration_fuzz / 100.0);
     duration = random.uniform(args.call_duration - delta, args.call_duration + delta)
     logger.info(f'call {call.sid} created, scheduling hangup for {duration:.2f}s')
 
