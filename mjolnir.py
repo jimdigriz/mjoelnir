@@ -140,7 +140,7 @@ logger.info('waiting for calls to complete')
 for csid in csids:
     while True:
         call = client.calls(csid).fetch()
-        if call.status in ['queued','ringing','in-progress']
+        if call.status in ['queued','ringing','in-progress']:
             break
         logger.debug('sleeping...')
         time.sleep(1)
