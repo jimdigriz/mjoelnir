@@ -50,6 +50,8 @@ limiter = token_bucket.Limiter(args.rate_limit, args.rate_limit_burst, storage)
 client = Client(args.twilio_account_sid, args.twilio_auth_token)
 client.http_client.logger.setLevel(logging.WARNING)
 
+running = True
+
 program = pathlib.Path(__file__).stem
 hostname = socket.gethostname()
 username = os.getlogin()
@@ -91,6 +93,11 @@ def call_create():
 def call_schedule():
     global call_scheduled
 
+    call_scheduled = False
+
+    if not running:
+        return
+
     if len(csids) < args.calls_max:
         if limiter.consume(key):
             delay = 0.0
@@ -102,7 +109,6 @@ def call_schedule():
         call_scheduled = True
     else:
         logger.debug('reached maximum call ceiling, skipping scheduling')
-        call_scheduled = False
 call_schedule()
 
 def stats_schedule():
@@ -125,19 +131,20 @@ def stats_schedule():
     scheduler.enter(args.stats_interval, 1, stats_schedule)
 stats_schedule()
 
-while True:
+while running:
     try:
         delay = scheduler.run(blocking=False)
         time.sleep(delay)
     except KeyboardInterrupt:
         logger.warning('Keyboard interupt')
-        break
+        running = False
 
 logger.info(f'ending {len(csids)} calls')
-for csid in csids.copy():
+csids_orig = csids.copy()
+for csid in csids_orig:
     call_complete(csid)
 logger.info('waiting for calls to complete')
-for csid in csids:
+for csid in csids_orig:
     while True:
         call = client.calls(csid).fetch()
         if not call.status in ['queued','ringing','in-progress']:
