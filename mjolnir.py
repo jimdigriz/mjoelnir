@@ -136,6 +136,14 @@ while True:
 logger.info(f'ending {len(csids)} calls')
 for csid in csids.copy():
     call_complete(csid)
+logger.info('waiting for calls to complete')
+for csid in csids:
+    while True:
+        call = client.calls(csid).fetch()
+        if call.status in ['queued','ringing','in-progress']
+            break
+        logger.debug('sleeping...')
+        time.sleep(1)
 logger.info('deleting queue')
 queue.delete()
 
