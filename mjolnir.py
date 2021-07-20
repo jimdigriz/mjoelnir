@@ -29,7 +29,7 @@ parser.add_argument('--call-duration', type=int, default=120, help='call duratio
 parser.add_argument('--call-duration-fuzz', type=int, default=20, help='call duration fuzz percentage')
 parser.add_argument('--rate-limit', type=float, default=10.0, help='rate limit (calls per second)')
 parser.add_argument('--rate-limit-burst', type=int, default=1, help='rate limit burst')
-parser.add_argument('--stats-interval', type=float, default=5.0, help='interval in seconds to print statistics')
+parser.add_argument('--stats-interval', type=float, default=5.0, help='interval in seconds to print statistics (use 0 to disable)')
 
 args = parser.parse_args()
 
@@ -54,6 +54,9 @@ if not (args.rate_limit >= 0.00):
     sys.exit(1)
 if args.rate_limit_burst < 1:
     logger.critical("rate-limit-burst must be greater or equal to 1")
+    sys.exit(1)
+if not (args.stats_interval >= 0.0):
+    logger.critical("stats-interval must be greater or equal to 0.0")
     sys.exit(1)
 
 running = True
@@ -149,7 +152,8 @@ def stats_schedule():
     logger.info(f'statistics active={len(csids)} completed={stats_completed} dropped={stats_dropped}')
 
     scheduler.enter(args.stats_interval, 1, stats_schedule)
-stats_schedule()
+if args.stats_interval > 0.0:
+    stats_schedule()
 
 while running:
     try:
