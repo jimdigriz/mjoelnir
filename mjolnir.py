@@ -56,6 +56,8 @@ if args.rate_limit_burst < 1:
     logger.critical("rate-limit-burst must be greater or equal to 1")
     sys.exit(1)
 
+running = True
+
 csids = set()
 call_scheduled = False;
 stats_dropped = 0
@@ -69,8 +71,6 @@ limiter = token_bucket.Limiter(args.rate_limit, args.rate_limit_burst, storage)
 
 client = Client(args.twilio_account_sid, args.twilio_auth_token)
 client.http_client.logger.setLevel(logging.WARNING)
-
-running = True
 
 program = pathlib.Path(__file__).stem
 hostname = socket.gethostname()
