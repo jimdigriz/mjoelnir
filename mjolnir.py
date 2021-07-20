@@ -47,7 +47,7 @@ elif args.call_duration < 30:
 if not (args.call_duration_fuzz >= 0 and args.call_duration_fuzz <= 100):
     logger.critical("calls-duration-fuzz must be a percentage between 0 and 100 inclusive")
     sys.exit(1)
-if args.call_duration_fuzz >= 30 or (args.call_duration - args.call_duration * (args.call_duration_fuzz / 100)) < 30:
+if args.call_duration_fuzz >= 30 or (args.call_duration - args.call_duration * (args.call_duration_fuzz / 100.0)) < 30:
     logger.warning("calls-duration-fuzz is large and possibly impacting the lower end of call-duration")
 if not (args.rate_limit >= 0.00):
     logger.critical("rate-limit must be greater than 0.0")
