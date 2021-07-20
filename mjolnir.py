@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+# Mjölnir is a contact/call centre ('hammer') load tester that uses Twilio's Programmable Voice to make calls through
+# Copyright (C) 2021, Alexander Clouter <alex@digriz.org.uk>
+# SPDX-License-Identifier: GPL-3.0-only
+
 import argparse
 import logging
 import os
