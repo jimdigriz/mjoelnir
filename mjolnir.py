@@ -36,6 +36,26 @@ args = parser.parse_args()
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s', level=args.log_level)
 logger = logging.getLogger()
 
+if not (args.calls_max >= 1 and args.calls_max <= 5000):
+    logger.critical("calls-max must be between 1 and 5000 inclusive")
+    sys.exit(1)
+if args.call_duration < 1:
+    logger.critical("calls-duration must be greater than zero")
+    sys.exit(1)
+elif args.call_duration < 30:
+    logger.warning("calls-duration should be greater than 30 seconds")
+if not (args.call_duration_fuzz >= 0 and args.call_duration_fuzz <= 100):
+    logger.critical("calls-duration-fuzz must be a percentage between 0 and 100 inclusive")
+    sys.exit(1)
+if args.call_duration_fuzz >= 30 or (args.call_duration - args.call_duration * (args.call_duration_fuzz / 100)) < 30:
+    logger.warning("calls-duration-fuzz is large and possibly impacting the lower end of call-duration")
+if not (args.rate_limit >= 0.00):
+    logger.critical("rate-limit must be greater than 0.0")
+    sys.exit(1)
+if args.rate_limit_burst < 1:
+    logger.critical("rate-limit-burst must be greater or equal to 1")
+    sys.exit(1)
+
 csids = set()
 call_scheduled = False;
 stats_dropped = 0
