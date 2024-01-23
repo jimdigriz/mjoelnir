@@ -20,8 +20,7 @@ Now set up the project with:
     git clone https://github.com/jimdigriz/mjoelnir.git
     cd mjoelnir
     virtualenv -p python3 venv
-    . venv/bin/activate
-    pip3 install -r requirements.txt
+    ./venv/bin/pip3 install -r requirements.txt
 
 # Usage
 
@@ -30,14 +29,13 @@ From inside the project directory run:
     export TWILIO_ACCOUNT_SID=AC...
     export TWILIO_AUTH_TOKEN=bd...
     
-    . venv/bin/activate
-    python3 mjolnir.py --from +1... --to +1...
+    ./venv/bin/python3 mjolnir.py --from +1... --to +1...
 
 Statistics are regularly printed (default is every 5 seconds, changeable with `--stats-interval`) and you can quit the tool by pressing `Ctrl-C` at any time.
 
 You can use the following to see a description of all the arguments you can use to control the tool.
 
-    python3 mjolnir.py --help
+    ./venv/bin/python3 mjolnir.py --help
 
 Some of the options are described here:
 
