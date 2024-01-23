@@ -17,7 +17,7 @@ You will need to install the dependencies with:
 
 Now set up the project with:
 
-    git clone https://gitlab.com/jimdigriz/mjoelnir.git
+    git clone https://github.com/jimdigriz/mjoelnir.git
     cd mjoelnir
     virtualenv -p python3 venv
     . venv/bin/activate
